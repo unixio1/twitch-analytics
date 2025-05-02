@@ -17,3 +17,20 @@ To install the application you will need the python environment manager **poetry
 ```shell
 poetry install
 ```
+
+### Pre-commit linting
+
+Pre-commit hooks are used to lint all the new code.
+The hooks used are defined on the _.pre-commit-config.yaml_ file.
+
+Install pre-commit by running:
+
+```shell
+poetry run pre-commit install
+```
+
+Run pre-commit:
+
+```shell
+poetry run pre-commit run --all-files
+```
