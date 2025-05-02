@@ -8,7 +8,6 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "pre-commit (>=4.2.0,<5.0.0)"
 ]
 
 [tool.poetry]
@@ -18,5 +17,6 @@ packages = [{include = "src"}]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.poetry.group.test.dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^8.3.5"
+pre-commit = "^4.2.0"
