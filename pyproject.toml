@@ -1,0 +1,22 @@
+[project]
+name = "twitch-analytics"
+version = "0.1.0"
+description = "Technical test API to provide twitch analytics"
+authors = [
+    {name = "unixio1",email = "unaxag01@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+]
+
+[tool.poetry]
+packages = [{include = "src"}] 
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.5"
+
