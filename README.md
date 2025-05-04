@@ -34,3 +34,14 @@ Run pre-commit:
 ```shell
 poetry run pre-commit run --all-files
 ```
+
+### Type checking
+
+The mypy tool is used as a python type checker on this project so we can get
+type hints and troubleshooting assist.
+
+Run the type checking:
+
+```shell
+poetry run mypy --package src
+```
