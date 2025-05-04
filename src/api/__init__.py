@@ -11,5 +11,5 @@ def setup_api() -> FastAPI:
     api_version = importlib.metadata.version("twitch-analytics")
     api = FastAPI(title="Twitch analytics API", version=api_version)
 
-    api.include_router(analytics_router, prefix="/analytics/")
+    api.include_router(analytics_router, prefix="/analytics")
     return api
