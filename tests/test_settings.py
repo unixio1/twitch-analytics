@@ -18,4 +18,4 @@ def test_settings(monkeypatch: pytest.MonkeyPatch):
     assert settings.client_id == client_id
     assert settings.client_secret == client_secret
     assert api_host_ip == api_host_ip
-    assert settings.api_host_port == api_host_port
+    assert settings.api_host_port == int(api_host_port)
