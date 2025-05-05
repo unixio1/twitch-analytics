@@ -1,20 +1,18 @@
 """Twitch Api client module"""
 
-import datetime
+from httpx import AsyncClient
 
 from src.application.user.model import UserDTO
+from src.infrastructure import get_api_client
+from src.settings import Settings
 
 
 async def get_user_by_id(user_id: int) -> UserDTO:
-    return UserDTO(
-        id="123",
-        login="user",
-        display_name="User",
-        type="",
-        broadcaster_type="partner",
-        description="Description",
-        profile_image_url="",
-        offline_image_url="",
-        view_count=0,
-        created_at=datetime.datetime.fromisoformat("2020-01-01T00:00:00Z"),
-    )
+    settings = Settings()
+    url = "https://api.twitch.tv/helix/users"
+    query_parameters = {"id": user_id}
+    client: AsyncClient
+    async with get_api_client(settings) as client:
+        response = await client.get(url, params=query_parameters)
+        data = response.json()
+        return UserDTO(**data["data"][0])

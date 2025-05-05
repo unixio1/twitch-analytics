@@ -4,6 +4,7 @@ import fastapi
 
 from src.api import errors
 from src.api.analytics.models import GetUserOutput
+from src.application.user import queries
 
 analytics_router = fastapi.APIRouter()
 
@@ -22,5 +23,5 @@ analytics_router = fastapi.APIRouter()
 )
 async def get_user(id: int) -> GetUserOutput:
     """Get a twitch user"""
-
+    user = await queries.get_user(id)
     return GetUserOutput()
