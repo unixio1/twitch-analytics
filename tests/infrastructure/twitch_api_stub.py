@@ -5,5 +5,5 @@ from src.settings import Settings
 from tests.conftest import USER_MOCK
 
 
-async def get_user_by_id(id: int, settings: Settings) -> UserDTO:
+async def get_user_by_id(user_id: int, settings: Settings) -> UserDTO:
     return USER_MOCK

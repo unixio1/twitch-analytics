@@ -5,7 +5,7 @@ import fastapi
 from src.api.analytics.models import GetUserOutput
 from src.api.errors import BaseError
 from src.application.user import queries
-from src.settings import Settings
+from src.settings import Settings, get_settings
 
 analytics_router = fastapi.APIRouter()
 
@@ -20,7 +20,9 @@ analytics_router = fastapi.APIRouter()
         fastapi.status.HTTP_500_INTERNAL_SERVER_ERROR: {"model": BaseError},
     },
 )
-async def get_user(id: int) -> GetUserOutput:
+async def get_user(
+    id: int, settings: Settings = fastapi.Depends(get_settings)
+) -> GetUserOutput:
     """Get a twitch user"""
     settings = Settings()
     user = await queries.get_user(id, settings)
