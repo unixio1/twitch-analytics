@@ -15,13 +15,13 @@ from tests.infrastructure.twitch_api_stub import get_user_by_id
 @pytest.mark.asyncio
 async def test_get_user(user_mock: UserDTO, settings_mock: Settings) -> None:
     "Test get user"
-    fetched_user = await get_user(int(user_mock.id))
+    fetched_user = await get_user(int(user_mock.id), settings_mock)
     assert fetched_user == user_mock
 
 
 @mock.patch("src.application.user.queries.get_user_by_id", get_user_by_id)
 @pytest.mark.asyncio
-async def test_get_user_invalid_id() -> None:
+async def test_get_user_invalid_id(settings_mock: Settings) -> None:
     """Test get user with invalid id"""
     with pytest.raises(errors.InvalidParameterError):
-        await get_user(-1)
+        await get_user(-1, settings_mock)

@@ -9,8 +9,7 @@ from src.infrastructure import get_api_client
 from src.settings import Settings
 
 
-async def get_user_by_id(user_id: int) -> Optional[UserDTO]:
-    settings = Settings()
+async def get_user_by_id(user_id: int, settings: Settings) -> Optional[UserDTO]:
     url = "https://api.twitch.tv/helix/users"
     query_parameters = {"id": user_id}
     client: AsyncClient
