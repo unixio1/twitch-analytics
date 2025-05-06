@@ -7,12 +7,13 @@ import pytest
 from src.application import errors
 from src.application.user.model import UserDTO
 from src.application.user.queries import get_user
+from src.settings import Settings
 from tests.infrastructure.twitch_api_stub import get_user_by_id
 
 
 @mock.patch("src.application.user.queries.get_user_by_id", get_user_by_id)
 @pytest.mark.asyncio
-async def test_get_user(user_mock: UserDTO) -> None:
+async def test_get_user(user_mock: UserDTO, settings_mock: Settings) -> None:
     "Test get user"
     fetched_user = await get_user(int(user_mock.id))
     assert fetched_user == user_mock
