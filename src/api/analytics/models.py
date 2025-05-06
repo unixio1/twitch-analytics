@@ -9,3 +9,7 @@ class GetUserOutput(BaseModel):
     """Output model for the get user endpoint"""
 
     user: UserDTO
+
+
+class GetStreamsOutput(BaseModel):
+    """Output model for the get streams endpoint"""

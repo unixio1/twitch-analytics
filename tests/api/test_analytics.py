@@ -31,3 +31,11 @@ def test_get_user(api_client_mock: TestClient) -> None:
     endpoint = "/analytics/user?id=1"
     response = api_client_mock.get(endpoint)
     assert response.status_code == status.HTTP_200_OK
+
+
+def test_get_streams(api_client_mock: TestClient) -> None:
+    """Test get streams endpoint"""
+
+    endpoint = "/analytics/streams"
+    response = api_client_mock.get(endpoint)
+    assert response.status_code == status.HTTP_200_OK
