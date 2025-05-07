@@ -10,7 +10,7 @@ from src.infrastructure.stream import get_twitch_streams
 from src.settings import Settings
 
 
-def get_streams(settings: Settings) -> List[StreamDTO]:
+async def get_streams(settings: Settings) -> List[StreamDTO]:
     """Main get stream query"""
     try:
         return await get_twitch_streams(settings)
