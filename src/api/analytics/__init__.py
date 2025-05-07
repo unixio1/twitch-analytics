@@ -4,6 +4,7 @@ import fastapi
 
 from src.api.analytics.models import GetStreamsOutput, GetUserOutput
 from src.api.errors import BaseError
+from src.application.stream.queries import get_streams
 from src.application.user import queries
 from src.settings import Settings, get_settings
 
@@ -40,5 +41,5 @@ async def get_stream(
     settings: Settings = fastapi.Depends(get_settings),
 ) -> GetStreamsOutput:
     """Get twitch streams"""
-
-    return GetStreamsOutput()
+    streams = await get_streams(settings)
+    return GetStreamsOutput(streams=streams)
