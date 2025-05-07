@@ -1,7 +1,9 @@
 from datetime import datetime
+from typing import List
 
 import pytest
 
+from src.application.stream.model import StreamDTO
 from src.application.user.model import UserDTO
 from src.settings import Settings
 
@@ -18,6 +20,8 @@ USER_MOCK = UserDTO(
     created_at=datetime.fromisoformat("2020-01-01T00:00:00Z"),
 )
 
+STREAM_MOCK = StreamDTO(title="Sample stream", user_name="Some user")
+
 
 @pytest.fixture
 def settings_mock(monkeypatch: pytest.MonkeyPatch) -> Settings:
@@ -29,3 +33,8 @@ def settings_mock(monkeypatch: pytest.MonkeyPatch) -> Settings:
 @pytest.fixture
 def user_mock() -> UserDTO:
     return USER_MOCK
+
+
+@pytest.fixture
+def streams_mock() -> List[StreamDTO]:
+    return [STREAM_MOCK]
