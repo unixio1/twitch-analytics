@@ -1,7 +1,7 @@
 """Twitch api client class"""
 
 from contextlib import asynccontextmanager
-from typing import AsyncIterator
+from typing import AsyncIterator, Optional
 
 from httpx import AsyncClient, HTTPError
 
@@ -12,7 +12,7 @@ class TwitchClient(ITwitchClient):
     def __init__(self, client_id: str, client_secret: str):
         self.__client_id = client_id
         self.__client_secret = client_secret
-        self.__api_token = None
+        self.__api_token: Optional[str] = None
 
     @asynccontextmanager
     async def get_api_client(self) -> AsyncIterator[AsyncClient]:
@@ -31,7 +31,7 @@ class TwitchClient(ITwitchClient):
         if not is_valid_token:
             await self.__retrieve_twitch_token()
 
-    async def __retrieve_twitch_token(self) -> str:
+    async def __retrieve_twitch_token(self) -> None:
         """Retrieve the twitch token from the twitch API"""
         url = "https://id.twitch.tv/oauth2/token"
         data = {
@@ -43,7 +43,7 @@ class TwitchClient(ITwitchClient):
         async with AsyncClient() as client:
             response = await client.post(url, data=data)
             data = response.json()
-            self.__api_token = data["access_token"]
+            self.__api_token = data["access_token"] if data["access_token"] else None
 
     async def __is_valid_token(self) -> bool:
         if not self.__api_token:
