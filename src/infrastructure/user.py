@@ -5,15 +5,16 @@ from typing import Optional
 from httpx import AsyncClient
 
 from src.application.user.model import UserDTO
-from src.infrastructure import get_api_client
-from src.settings import Settings
+from src.interfaces.twitch_client import ITwitchClient
 
 
-async def get_user_by_id(user_id: int, settings: Settings) -> Optional[UserDTO]:
+async def get_user_by_id(
+    user_id: int, twitch_client: ITwitchClient
+) -> Optional[UserDTO]:
     url = "https://api.twitch.tv/helix/users"
     query_parameters = {"id": user_id}
     client: AsyncClient
-    async with get_api_client(settings) as client:
+    async with twitch_client.get_api_client() as client:
         response = await client.get(url, params=query_parameters)
         if response.status_code == 404:
             return None

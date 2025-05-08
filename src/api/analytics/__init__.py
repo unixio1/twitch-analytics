@@ -6,7 +6,8 @@ from src.api.analytics.models import GetStreamsOutput, GetUserOutput
 from src.api.errors import BaseError
 from src.application.stream.queries import get_streams
 from src.application.user import queries
-from src.settings import Settings, get_settings
+from src.dependency_injection import get_twitch_client
+from src.interfaces.twitch_client import ITwitchClient
 
 analytics_router = fastapi.APIRouter()
 
@@ -22,10 +23,11 @@ analytics_router = fastapi.APIRouter()
     },
 )
 async def get_user(
-    id: int, settings: Settings = fastapi.Depends(get_settings)
+    id: int,
+    twitch_client: ITwitchClient = fastapi.Depends(get_twitch_client),
 ) -> GetUserOutput:
     """Get a twitch user"""
-    user = await queries.get_user(id, settings)
+    user = await queries.get_user(id, twitch_client)
     return GetUserOutput(user=user)
 
 
@@ -38,8 +40,8 @@ async def get_user(
     },
 )
 async def get_stream(
-    settings: Settings = fastapi.Depends(get_settings),
+    twitch_client: ITwitchClient = fastapi.Depends(get_twitch_client),
 ) -> GetStreamsOutput:
     """Get twitch streams"""
-    streams = await get_streams(settings)
+    streams = await get_streams(twitch_client)
     return GetStreamsOutput(streams=streams)
