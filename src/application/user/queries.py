@@ -5,14 +5,14 @@ from httpx import HTTPError
 from src.application import errors
 from src.application.user.model import UserDTO
 from src.infrastructure.user import get_user_by_id
-from src.settings import Settings
+from src.interfaces.twitch_client import ITwitchClient
 
 
-async def get_user(user_id: int, settings: Settings) -> UserDTO:
+async def get_user(user_id: int, twitch_client: ITwitchClient) -> UserDTO:
     """Get a twitch user data given the ID"""
     _raise_if_invalid_id(user_id)
     try:
-        user = await get_user_by_id(user_id, settings)
+        user = await get_user_by_id(user_id, twitch_client)
         if not user:
             raise errors.ModelNotFoundError("User not found")
         return user

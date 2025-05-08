@@ -6,21 +6,15 @@ from fastapi import status
 from fastapi.testclient import TestClient
 
 from src.api import setup_api
-from src.settings import Settings, get_settings
 from tests.infrastructure.twitch_api_stub import get_twitch_streams, get_user_by_id
 
 
 @pytest.fixture
-def api_client_mock(settings_mock: Settings) -> Iterator[TestClient]:
+def api_client_mock() -> Iterator[TestClient]:
     """Test api client"""
 
     api = setup_api()
 
-    def get_settings_mock() -> Settings:
-        return settings_mock
-
-    dependencies = {get_settings: get_settings_mock}
-    api.dependency_overrides.update(dependencies)
     yield TestClient(api)
 
 

@@ -5,15 +5,14 @@ from typing import List
 from httpx import AsyncClient
 
 from src.application.stream.model import StreamDTO
-from src.infrastructure import get_api_client
-from src.settings import Settings
+from src.interfaces.twitch_client import ITwitchClient
 
 
-async def get_twitch_streams(settings: Settings) -> List[StreamDTO]:
+async def get_twitch_streams(twitch_client: ITwitchClient) -> List[StreamDTO]:
     """Get a list of twitch streams"""
     url = "https://api.twitch.tv/helix/streams"
     client: AsyncClient
-    async with get_api_client(settings) as client:
+    async with twitch_client.get_api_client() as client:
         response = await client.get(url)
         if response.status_code == 404:
             return []
